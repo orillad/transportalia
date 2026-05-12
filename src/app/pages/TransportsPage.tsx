@@ -9,6 +9,7 @@ import {
   Truck as TruckIcon,
   Weight,
 } from 'lucide-react';
+import { toast } from 'sonner';
 import truckImage01 from '../../assets/trucks/truck-card-01.jpg';
 import truckImage02 from '../../assets/trucks/truck-card-02.jpg';
 import truckImage03 from '../../assets/trucks/truck-card-03.jpg';
@@ -25,6 +26,7 @@ export default function TransportsPage() {
   const [showRoutes, setShowRoutes] = useState(false);
   const [selectedTruckId, setSelectedTruckId] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date(2015, 4, 24));
+  const [availableTruckIds, setAvailableTruckIds] = useState<string[] | null>(null);
   const [formData, setFormData] = useState({
     route: 'BCN - MAD',
     weight: '1000',
@@ -54,7 +56,74 @@ export default function TransportsPage() {
   ];
 
   const selectedRoute = mockRoutes.find((route) => route.code === formData.route) ?? mockRoutes[0];
-  const selectedTruck = trucks.find((truck) => truck.id === selectedTruckId) ?? null;
+  const visibleTrucks = availableTruckIds ? trucks.filter((truck) => availableTruckIds.includes(truck.id)) : trucks;
+  const selectedTruck = visibleTrucks.find((truck) => truck.id === selectedTruckId) ?? null;
+
+  const parseNumber = (value: string) => Number(value.replace(',', '.'));
+
+  const getTruckLimits = (dimensions: string) => {
+    const [width, height, length] = dimensions
+      .replace(' m', '')
+      .split('×')
+      .map((value) => Number(value.replace(',', '.')));
+
+    return { width, height, length };
+  };
+
+  const handleSearchTrucks = () => {
+    const requestedWeight = parseNumber(formData.weight);
+    const requestedHeight = parseNumber(formData.height);
+    const requestedWidth = parseNumber(formData.width);
+    const requestedLength = parseNumber(formData.length);
+
+    const values = [requestedWeight, requestedHeight, requestedWidth, requestedLength];
+    const hasInvalidValues = values.some((value) => Number.isNaN(value) || value <= 0);
+
+    if (hasInvalidValues) {
+      toast.error('Dades del transport no vàlides', {
+        description: 'Revisa el pes i les dimensions abans de cercar camions.',
+      });
+      return;
+    }
+
+    const compatibleTrucks = trucks.filter((truck) => {
+      const limits = getTruckLimits(truck.dimensions);
+
+      return (
+        truck.weight >= requestedWeight &&
+        limits.height >= requestedHeight &&
+        limits.width >= requestedWidth &&
+        limits.length >= requestedLength
+      );
+    });
+
+    setSelectedTruckId(null);
+    setAvailableTruckIds(compatibleTrucks.map((truck) => truck.id));
+
+    if (compatibleTrucks.length === 0) {
+      toast.error('No hi ha camions compatibles', {
+        description: 'Prova amb menys pes o dimensions més petites per continuar la demo.',
+      });
+      return;
+    }
+
+    toast.success('Camions trobats correctament', {
+      description: `${compatibleTrucks.length} camió(ns) compatible(s) amb aquesta ruta i càrrega.`,
+    });
+  };
+
+  const handleCreateTransport = () => {
+    if (!selectedTruck) {
+      toast.error('Selecciona un camió abans de crear el transport', {
+        description: 'Primer cerca camions compatibles i després escull-ne un.',
+      });
+      return;
+    }
+
+    toast.success('Transport creat correctament', {
+      description: `S'ha creat el transport de la ruta ${selectedRoute.code} amb el camió ${selectedTruck.plate}.`,
+    });
+  };
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden p-6">
@@ -190,7 +259,11 @@ export default function TransportsPage() {
               </div>
             </div>
 
-            <button className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 hover:bg-gray-50">
+            <button
+              type="button"
+              onClick={handleSearchTrucks}
+              className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 hover:bg-gray-50"
+            >
               Cercar Camions
             </button>
           </div>
@@ -199,7 +272,7 @@ export default function TransportsPage() {
         <div className="col-span-2 flex min-h-0 flex-col">
           <div className="min-h-0 flex-1 overflow-y-auto rounded-lg bg-gray-50 p-3">
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-              {trucks.map((truck, index) => (
+              {visibleTrucks.map((truck, index) => (
                 <button
                   key={truck.id}
                   type="button"
@@ -270,7 +343,8 @@ export default function TransportsPage() {
           </div>
 
           <button
-            disabled={!selectedTruck}
+            type="button"
+            onClick={handleCreateTransport}
             className="mt-4 w-full shrink-0 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {selectedTruck ? `Crear Transport amb ${selectedTruck.plate}` : 'Selecciona un camió per continuar'}
