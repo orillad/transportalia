@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import imgBg1 from '../../assets/backgrounds/login-hero.png';
 import imgLogoGran from '../../assets/logos/image.png';
+import { mockCurrentUser } from '../mock/data';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function LoginPage() {
     e.preventDefault();
     
     // Mock validation
-    if (email === 'm@example.com' && password === 'password123') {
+    if (email === mockCurrentUser.email && password === mockCurrentUser.password) {
       navigate('/transports-avui');
     } else {
       toast.error('Email o contrasenya incorrectes', {
@@ -49,7 +50,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="m@example.com"
+                  placeholder={mockCurrentUser.email}
                   className="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>

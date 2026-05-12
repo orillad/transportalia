@@ -8,6 +8,8 @@ import {
   SidebarTrigger,
 } from "./Sidebar";
 import { UserMenu } from "./UserMenu";
+import { useCurrentUserAvatar } from "../hooks/useCurrentUserAvatar";
+import { getUserFullName, mockCurrentUser } from "../mock/data";
 
 type RouteHandle = {
   title?: string;
@@ -15,6 +17,7 @@ type RouteHandle = {
 
 export function InternalLayout() {
   const matches = useMatches();
+  const avatarSrc = useCurrentUserAvatar();
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("Català");
   const languages = ["Català", "Castellà", "Anglès"];
@@ -64,8 +67,9 @@ export function InternalLayout() {
             </div>
 
             <UserMenu
-              userName="Nom Cognom"
-              userDNI="00000000 A"
+              userName={getUserFullName(mockCurrentUser)}
+              userDNI={mockCurrentUser.dni}
+              avatarSrc={avatarSrc}
             />
           </div>
         </div>

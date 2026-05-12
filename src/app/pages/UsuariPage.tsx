@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { Pencil } from 'lucide-react';
 import { toast } from 'sonner';
-import imgAvatar from '../../assets/avatars/user-profile.png';
-import { mockUsers } from '../mock/data';
+import { persistCurrentUserAvatar, useCurrentUserAvatar } from '../hooks/useCurrentUserAvatar';
+import { mockCurrentUser } from '../mock/data';
 
 export default function UsuariPage() {
-  const currentUser = mockUsers[0];
+  const currentUser = mockCurrentUser;
+  const avatarSrc = useCurrentUserAvatar();
   const [formData, setFormData] = useState({
     name: currentUser.name,
     surname: currentUser.surname,
@@ -13,6 +15,26 @@ export default function UsuariPage() {
     phone: currentUser.phone,
     email: currentUser.email,
   });
+
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const nextAvatarSrc = typeof reader.result === 'string' ? reader.result : '';
+
+      if (!nextAvatarSrc) return;
+
+      persistCurrentUserAvatar(nextAvatarSrc);
+      toast.success('Imatge de perfil actualitzada');
+    };
+
+    reader.readAsDataURL(file);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success('Canvi de dades exitós', {
@@ -25,12 +47,21 @@ export default function UsuariPage() {
       <div className="mx-auto min-h-0 w-full max-w-3xl flex-1 overflow-y-auto">
         <div className="flex gap-8">
           <div className="flex-shrink-0">
-            <div className="w-[200px] h-[200px] rounded-lg overflow-hidden bg-gradient-to-b from-cyan-400 to-cyan-500">
+            <div className="relative h-[200px] w-[200px] overflow-hidden rounded-lg bg-gradient-to-b from-cyan-400 to-cyan-500">
               <img
-                src={imgAvatar}
+                src={avatarSrc}
                 alt={currentUser.name}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
+              <label className="absolute right-3 bottom-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-primary shadow-md transition hover:scale-105 hover:bg-primary hover:text-white">
+                <Pencil className="h-4 w-4" />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleAvatarChange}
+                />
+              </label>
             </div>
 
             <div className="mt-4 text-center">

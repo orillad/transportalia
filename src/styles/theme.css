@@ -3,9 +3,10 @@
 :root {
   --font-sans: 'Inter', 'Segoe UI', sans-serif;
   --font-size: 16px;
-  --scrollbar-thumb: rgba(19, 62, 111, 0.75);
-  --scrollbar-thumb-hover: rgba(19, 62, 111, 0.9);
-  --scrollbar-track: rgba(209, 213, 219, 0.5);
+  --scrollbar-size: 10px;
+  --scrollbar-thumb: rgba(19, 62, 111, 0.62);
+  --scrollbar-thumb-hover: rgba(19, 62, 111, 0.8);
+  --scrollbar-track: rgba(232, 237, 243, 0.7);
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -141,31 +142,36 @@
   html {
     font-size: var(--font-size);
     scrollbar-gutter: stable;
-    scrollbar-width: auto;
+  }
+
+  * {
+    scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   }
 
   *::-webkit-scrollbar {
-    width: 28px;
-    height: 28px;
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
   }
 
   *::-webkit-scrollbar-track {
     background: var(--scrollbar-track);
-    border-radius: 9999px;
+    border-radius: 999px;
   }
 
   *::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb);
-    border-radius: 9999px;
-    border: 6px solid transparent;
-    background-clip: padding-box;
+    border: 2px solid var(--scrollbar-track);
+    border-radius: 999px;
+    min-height: 32px;
   }
 
   *::-webkit-scrollbar-thumb:hover {
     background: var(--scrollbar-thumb-hover);
-    border: 6px solid transparent;
-    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
   }
 
   h1 {

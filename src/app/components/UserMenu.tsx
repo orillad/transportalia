@@ -5,9 +5,10 @@ import { ChevronDown } from 'lucide-react';
 interface UserMenuProps {
   userName: string;
   userDNI: string;
+  avatarSrc: string;
 }
 
-export function UserMenu({ userName, userDNI }: UserMenuProps) {
+export function UserMenu({ userName, userDNI, avatarSrc }: UserMenuProps) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -20,10 +21,12 @@ export function UserMenu({ userName, userDNI }: UserMenuProps) {
           <div className="text-sm font-medium">{userName}</div>
           <div className="text-[11px] text-gray-500">{userDNI}</div>
         </div>
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-          <span className="text-xs font-medium text-white">
-            {userName.split(' ').map(n => n[0]).join('')}
-          </span>
+        <div className="h-8 w-8 overflow-hidden rounded-full bg-primary">
+          <img
+            src={avatarSrc}
+            alt={userName}
+            className="h-full w-full object-cover"
+          />
         </div>
         <ChevronDown className="h-4 w-4 text-gray-500" />
       </button>
