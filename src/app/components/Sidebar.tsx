@@ -1,5 +1,11 @@
 import { Link, useLocation } from "react-router";
-import { FileText, Link as LinkIcon, Truck, Users } from "lucide-react";
+import {
+  FileText,
+  Link as LinkIcon,
+  Truck,
+  UserRoundX,
+  Users,
+} from "lucide-react";
 import imgLogoGran from "../../assets/logos/image.png";
 import imgLogoPetit from "../../assets/logos/logo_petit.svg";
 import {
@@ -26,7 +32,7 @@ const menuItems = [
     activePaths: ["/assignacions", "/desassignacions"],
   },
   { path: "/transports", label: "Transports", icon: Truck },
-  { path: "/desbloqueig", label: "Desbloqueig", icon: Users },
+  { path: "/desbloqueig", label: "Desbloqueig", icon: UserRoundX },
 ];
 
 export function Sidebar() {

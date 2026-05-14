@@ -1,189 +1,113 @@
 # TRANSPORTALIA
 
-Aplicació creada amb React, Vite, Tailwind CSS, shadcn/ui i PNPM.
+Aplicació frontend de gestió de transports construïda amb React i Vite. El projecte simula un entorn intern per consultar transports, gestionar assignacions i accedir a dades d'usuari mitjançant dades mock.
 
----
+## Tecnologies
 
-# Requisits previs
+- React 18
+- React Router 7
+- Vite 6
+- Tailwind CSS 4
+- PNPM
+- shadcn/ui
 
-Abans d’executar el projecte necessites instal·lar:
+## Requisits
 
-- NVM (Node Version Manager)
-- Node.js
+Abans d'executar el projecte necessites:
+
+- Node.js LTS
 - PNPM
 
----
-
-# 1. Instal·lar NVM
-
-## Linux / macOS
-
-Executa:
-
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-```
-
-o bé:
-
-```bash
-wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-```
-
-Després reinicia la terminal o executa:
-
-```bash
-source ~/.bashrc
-```
-
-o:
-
-```bash
-source ~/.zshrc
-```
-
-Comprova que funciona:
-
-```bash
-nvm --version
-```
-
----
-
-## Windows
-
-Instal·la **NVM for Windows**:
-
-[NVM for Windows](https://github.com/coreybutler/nvm-windows/releases?utm_source=chatgpt.com)
-
-Descarrega:
-
-```txt
-nvm-setup.exe
-```
-
-Instal·la’l i reinicia la terminal.
-
-Comprova:
-
-```bash
-nvm version
-```
-
----
-
-# 2. Instal·lar Node.js amb NVM
-
-Instal·la la versió LTS recomanada:
-
-```bash
-nvm install --lts
-```
-
-Utilitza-la:
-
-```bash
-nvm use --lts
-```
-
-Comprova:
-
-```bash
-node -v
-```
-
-També pots comprovar npm:
-
-```bash
-npm -v
-```
-
----
-
-# 3. Instal·lar PNPM
-
-Instal·la PNPM globalment:
+Si no tens `pnpm` instal·lat:
 
 ```bash
 npm install -g pnpm
 ```
 
-Comprova:
+## Instal·lació
 
-```bash
-pnpm -v
-```
-
----
-
-# 4. Obrir el projecte
-
-Obre la terminal dins la carpeta del projecte.
-
----
-
-# 5. Instal·lar dependències
+1. Clona o descarrega el projecte.
+2. Obre una terminal a l'arrel del repositori.
+3. Instal·la les dependències:
 
 ```bash
 pnpm install
 ```
 
----
+## Execució en desenvolupament
 
-# 6. Executar el projecte
+Per arrencar el projecte en local:
 
 ```bash
 pnpm dev
 ```
 
-Obre al navegador:
+Per defecte quedarà disponible a:
 
 ```txt
 http://localhost:5173
 ```
 
----
+## Build de producció
 
-# Build de producció
-
-Crear build:
+Per generar la build:
 
 ```bash
 pnpm build
 ```
 
-Previsualitzar:
+La sortida es genera a la carpeta `dist/`.
+
+Per previsualitzar la build localment:
 
 ```bash
-pnpm preview
+pnpm exec vite preview
 ```
 
----
+## Credencials per defecte
 
-# Tecnologies utilitzades
+El projecte utilitza autenticació mock. Per accedir al login de demo:
 
-- React
-- Vite
-- Tailwind CSS
-- shadcn/ui
-- PNPM
+- Email: `test@test.com`
+- Contrasenya: `1234`
 
----
+Per provar la pantalla de recuperació de contrasenya:
 
-# Estructura del projecte
+- DNI vàlid de demo: `15566965A`
+
+## Comportament de la demo
+
+- No hi ha backend real ni base de dades.
+- El login valida contra dades mock locals.
+- Les dades de transports, camions, rutes i usuaris són simulades.
+- Els canvis no tenen persistència real.
+
+## Scripts útils
+
+- `pnpm dev`: arrenca el servidor de desenvolupament
+- `pnpm build`: genera la build de producció
+- `pnpm exec vite preview`: obre una previsualització de la build
+
+## Desplegament
+
+El projecte està preparat per publicar-se com a web estàtica. Si es desplega a GitHub Pages, les rutes funcionen amb hash router, per exemple:
+
+```txt
+/#/login
+```
+
+## Estructura principal
 
 ```txt
 src/
-components/
-components/ui/
-pages/
-public/
+  app/
+    components/
+    hooks/
+    mock/
+    pages/
 ```
 
----
+## Notes
 
-# Notes
-
-- Els components de shadcn/ui es troben a `components/ui`
-- Tailwind CSS ja està configurat
-- El projecte utilitza PNPM com a gestor de paquets
+- Les credencials anteriors són només per a la demo.
+- La lògica d'accés no és segura i no s'ha d'utilitzar en producció.

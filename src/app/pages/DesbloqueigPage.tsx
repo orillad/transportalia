@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { toast } from 'sonner';
 import { mockUsers } from '../mock/data';
 
@@ -33,16 +32,16 @@ export default function DesbloqueigPage() {
             {blockedUsers.map((user) => (
               <div
                 key={user.id}
-                className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 hover:border-gray-300"
+                className="group flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#133e6f]/35 hover:bg-slate-50/80 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]"
               >
                 <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary shadow-sm transition-transform duration-200 group-hover:scale-105">
                     <span className="text-white font-medium">
                       {user.name.split(' ').map((n) => n[0]).join('')}
                     </span>
                   </div>
                   <div>
-                    <div className="font-medium">
+                    <div className="font-medium text-gray-900 transition-colors group-hover:text-[#133e6f]">
                       {user.name} {user.surname}
                     </div>
                     <div className="text-sm text-gray-500">
@@ -53,7 +52,7 @@ export default function DesbloqueigPage() {
 
                 <button
                   onClick={() => handleUnblock(user.id)}
-                  className="rounded-lg bg-primary px-6 py-2 text-primary-foreground hover:bg-primary/90"
+                  className="rounded-lg bg-primary px-6 py-2 text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_12px_24px_rgba(19,62,111,0.2)]"
                 >
                   Desbloquejar
                 </button>

@@ -46,10 +46,10 @@ export default function DesassignacionsPage() {
         className="mb-6 shrink-0"
       >
         <TabsList className="mx-auto w-full max-w-xl">
-          <TabsTrigger value="assignar" className="px-6">
+          <TabsTrigger className="px-6 transition-all hover:bg-white/80 hover:text-[#133e6f] hover:shadow-sm data-[state=active]:shadow-sm" value="assignar">
             Assignar conductor
           </TabsTrigger>
-          <TabsTrigger value="desassignar" className="px-6">
+          <TabsTrigger className="px-6 transition-all hover:bg-white/80 hover:text-[#133e6f] hover:shadow-sm data-[state=active]:shadow-sm" value="desassignar">
             Desassignar conductor
           </TabsTrigger>
         </TabsList>
@@ -64,21 +64,23 @@ export default function DesassignacionsPage() {
               <button
                 key={driver.id}
                 onClick={() => toggleDriver(driver.id)}
-                className={`w-full flex items-center gap-4 rounded-lg border p-4 transition-colors ${
+                className={`group flex w-full items-center justify-between gap-4 rounded-xl border p-4 text-left transition-all duration-200 ${
                 selectedDrivers.includes(driver.id)
-                  ? 'border-primary bg-primary/5'
-                    : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-primary bg-primary/5 shadow-[0_10px_24px_rgba(19,62,111,0.08)]'
+                    : 'border-gray-200 bg-white hover:-translate-y-0.5 hover:border-[#133e6f]/35 hover:bg-slate-50/80 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]'
                 }`}
               >
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-medium">
-                    {driver.name.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-                <div className="flex-1 text-left">
-                  <div className="font-medium">{driver.name} {driver.surname}</div>
-                  <div className="text-sm text-gray-500">{driver.licenseNumber}</div>
-                  <div className="text-sm text-gray-400">Assignat a: {driver.assignedTo}</div>
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary shadow-sm transition-transform duration-200 group-hover:scale-105">
+                    <span className="text-white font-medium">
+                      {driver.name.split(' ').map(n => n[0]).join('')}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900 transition-colors group-hover:text-[#133e6f]">{driver.name} {driver.surname}</div>
+                    <div className="text-sm text-gray-500">{driver.licenseNumber}</div>
+                    <div className="text-sm text-gray-400 transition-colors group-hover:text-gray-500">Assignat a: {driver.assignedTo}</div>
+                  </div>
                 </div>
                 {selectedDrivers.includes(driver.id) && (
                   <Check className="w-5 h-5 text-[#133e6f]" />
@@ -90,14 +92,14 @@ export default function DesassignacionsPage() {
           <div className="mt-6 flex shrink-0 justify-end gap-4">
             <button
               onClick={() => setSelectedDrivers([])}
-              className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="rounded-lg border border-gray-300 px-6 py-2 transition-all hover:-translate-y-0.5 hover:border-gray-400 hover:bg-gray-50 hover:shadow-sm"
             >
               Cancel·lar
             </button>
             <button
               onClick={handleUnassign}
               disabled={selectedDrivers.length === 0}
-              className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-lg bg-red-600 px-6 py-2 text-white transition-all hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-[0_12px_24px_rgba(220,38,38,0.22)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
               Desassignar
             </button>

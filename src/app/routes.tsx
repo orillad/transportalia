@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createHashRouter } from 'react-router';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecuperarContrasenyaPage from './pages/RecuperarContrasenyaPage';
@@ -10,7 +10,7 @@ import DesbloqueigPage from './pages/DesbloqueigPage';
 import UsuariPage from './pages/UsuariPage';
 import { InternalLayout } from './components/InternalLayout';
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: '/',
     element: <HomePage />,

@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { Pencil } from 'lucide-react';
 import { toast } from 'sonner';
+import { Link } from 'react-router';
 import { persistCurrentUserAvatar, useCurrentUserAvatar } from '../hooks/useCurrentUserAvatar';
 import { mockCurrentUser } from '../mock/data';
 
@@ -69,9 +70,15 @@ export default function UsuariPage() {
               <div className="text-lg font-semibold">{currentUser.dni}</div>
             </div>
 
-            <button className="mt-4 w-full text-sm text-primary hover:underline">
-              Canviar la contrasenya
-            </button>
+            <div className="mt-5 text-center">
+              <p className="text-xs text-gray-500">Necessites actualitzar l&apos;accés del compte?</p>
+              <Link
+                to="/recuperar-contrasenya"
+                className="mt-1 inline-flex text-sm font-medium text-primary underline underline-offset-4 transition hover:text-primary/80"
+              >
+                Canviar la contrasenya
+              </Link>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="flex-1 space-y-4">

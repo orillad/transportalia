@@ -36,10 +36,10 @@ export default function AssignacionsPage() {
         className="mb-6 shrink-0"
       >
         <TabsList className="mx-auto w-full max-w-xl">
-          <TabsTrigger value="assignar" className="px-6">
+          <TabsTrigger className="px-6 transition-all hover:bg-white/80 hover:text-[#133e6f] hover:shadow-sm data-[state=active]:shadow-sm" value="assignar">
             Assignar conductor
           </TabsTrigger>
-          <TabsTrigger value="desassignar" className="px-6">
+          <TabsTrigger className="px-6 transition-all hover:bg-white/80 hover:text-[#133e6f] hover:shadow-sm data-[state=active]:shadow-sm" value="desassignar">
             Desassignar conductor
           </TabsTrigger>
         </TabsList>
@@ -53,20 +53,24 @@ export default function AssignacionsPage() {
               <button
                 key={driver.id}
                 onClick={() => setSelectedDriver(driver.id)}
-                className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-colors ${
+                className={`group flex w-full items-center justify-between gap-3 rounded-xl border p-3 text-left transition-all duration-200 ${
                   selectedDriver === driver.id
-                    ? 'border-primary bg-primary/5'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-primary bg-primary/5 shadow-[0_10px_24px_rgba(19,62,111,0.08)]'
+                    : 'border-gray-200 bg-white hover:-translate-y-0.5 hover:border-[#133e6f]/35 hover:bg-slate-50/80 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]'
                 }`}
               >
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary shadow-sm transition-transform duration-200 group-hover:scale-105">
                   <span className="text-white font-medium text-sm">
                     {driver.name.split(' ').map(n => n[0]).join('')}
                   </span>
-                </div>
-                <div className="flex-1 text-left">
-                  <div className="font-medium">{driver.name} {driver.surname}</div>
-                  <div className="text-sm text-gray-500">{driver.licenseNumber}</div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900 transition-colors group-hover:text-[#133e6f]">
+                      {driver.name} {driver.surname}
+                    </div>
+                    <div className="text-sm text-gray-500">{driver.licenseNumber}</div>
+                  </div>
                 </div>
                 {selectedDriver === driver.id && (
                   <Check className="w-5 h-5 text-[#133e6f]" />
@@ -83,16 +87,25 @@ export default function AssignacionsPage() {
               <button
                 key={truck.id}
                 onClick={() => setSelectedTruck(truck.id)}
-                className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-colors ${
+                className={`group flex w-full items-center justify-between gap-3 rounded-xl border p-3 text-left transition-all duration-200 ${
                   selectedTruck === truck.id
-                    ? 'border-primary bg-primary/5'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-primary bg-primary/5 shadow-[0_10px_24px_rgba(19,62,111,0.08)]'
+                    : 'border-gray-200 bg-white hover:-translate-y-0.5 hover:border-[#133e6f]/35 hover:bg-slate-50/80 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]'
                 }`}
               >
-                <div className="flex-1 text-left">
-                  <div className="font-medium">{truck.plate}</div>
-                  <div className="text-sm text-gray-500">
-                    {truck.weight} kg | {truck.dimensions}
+                <div className="flex items-center gap-3">
+                  <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg border border-gray-200 bg-gray-100 shadow-sm transition-shadow duration-200 group-hover:shadow-md">
+                    <img
+                      src={truck.image}
+                      alt={`Camió ${truck.plate}`}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900 transition-colors group-hover:text-[#133e6f]">{truck.plate}</div>
+                    <div className="text-sm text-gray-500">
+                      {truck.weight} kg | {truck.dimensions}
+                    </div>
                   </div>
                 </div>
                 {selectedTruck === truck.id && (
@@ -110,14 +123,14 @@ export default function AssignacionsPage() {
             setSelectedDriver(null);
             setSelectedTruck(null);
           }}
-          className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+          className="rounded-lg border border-gray-300 px-6 py-2 transition-all hover:-translate-y-0.5 hover:border-gray-400 hover:bg-gray-50 hover:shadow-sm"
         >
           Cancel·lar
         </button>
         <button
           onClick={handleAssign}
           disabled={!selectedDriver || !selectedTruck}
-          className="rounded-lg bg-primary px-6 py-2 text-primary-foreground hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-lg bg-primary px-6 py-2 text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_12px_24px_rgba(19,62,111,0.2)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
         >
           Assignar
         </button>

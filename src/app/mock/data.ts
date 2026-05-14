@@ -1,4 +1,10 @@
 import imgDefaultAvatar from '../../assets/avatars/user-profile.png';
+import truckImage01 from '../../assets/trucks/truck-card-01.jpg';
+import truckImage02 from '../../assets/trucks/truck-card-02.jpg';
+import truckImage03 from '../../assets/trucks/truck-card-03.jpg';
+import truckImage04 from '../../assets/trucks/truck-card-04.jpg';
+import truckImage05 from '../../assets/trucks/truck-card-05.jpg';
+import truckImage06 from '../../assets/trucks/truck-card-06.jpg';
 
 // Mock data per l'aplicació TRANSPORTALIA
 
@@ -55,21 +61,31 @@ export function getUserFullName(user: {
   return [user.name, user.surname, user.surname2].filter(Boolean).join(" ");
 }
 
+const truckImages = [
+  truckImage01,
+  truckImage02,
+  truckImage03,
+  truckImage04,
+  truckImage05,
+  truckImage06,
+];
+
 export const mockTrucks = [
-  { id: "1", plate: "9012 GHV", weight: 9500, dimensions: "2,2×2,8×8 m" },
-  { id: "2", plate: "8362 LHJ", weight: 4500, dimensions: "3,2×4,8×10 m" },
-  { id: "3", plate: "1054 PTD", weight: 13500, dimensions: "5,2×7,8×15 m" },
-  { id: "4", plate: "5812 NJT", weight: 5500, dimensions: "3,2×4,8×12 m" },
-  { id: "5", plate: "6245 BSL", weight: 4000, dimensions: "3,2×3,4×8 m" },
-  { id: "6", plate: "7032 DWR", weight: 6000, dimensions: "3,2×4,8×15 m" },
-  { id: "7", plate: "4852 LVR", weight: 9500, dimensions: "2,9×2,5×8 m" },
-  { id: "8", plate: "1233 KFC", weight: 7500, dimensions: "3,2×5,8×15 m" },
-  { id: "9", plate: "5678 DEF", weight: 10000, dimensions: "3,2×4,8×10 m" },
+  { id: "1", plate: "9012 GHV", weight: 9500, dimensions: "2,2×2,8×8 m", image: truckImages[0] },
+  { id: "2", plate: "8362 LHJ", weight: 4500, dimensions: "3,2×4,8×10 m", image: truckImages[1] },
+  { id: "3", plate: "1054 PTD", weight: 13500, dimensions: "5,2×7,8×15 m", image: truckImages[2] },
+  { id: "4", plate: "5812 NJT", weight: 5500, dimensions: "3,2×4,8×12 m", image: truckImages[3] },
+  { id: "5", plate: "6245 BSL", weight: 4000, dimensions: "3,2×3,4×8 m", image: truckImages[4] },
+  { id: "6", plate: "7032 DWR", weight: 6000, dimensions: "3,2×4,8×15 m", image: truckImages[5] },
+  { id: "7", plate: "4852 LVR", weight: 9500, dimensions: "2,9×2,5×8 m", image: truckImages[0] },
+  { id: "8", plate: "1233 KFC", weight: 7500, dimensions: "3,2×5,8×15 m", image: truckImages[1] },
+  { id: "9", plate: "5678 DEF", weight: 10000, dimensions: "3,2×4,8×10 m", image: truckImages[2] },
   {
     id: "10",
     plate: "1234 ABC",
     weight: 8500,
     dimensions: "1,8 × 2,5 × 2,8 m",
+    image: truckImages[3],
   },
 ];
 
