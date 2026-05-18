@@ -109,5 +109,5 @@ src/
 
 ## Notes
 
-- Les credencials anteriors són només per a la demo.
+- Les credencials anteriors són només per a la demo..
 - La lògica d'accés no és segura i no s'ha d'utilitzar en producció.

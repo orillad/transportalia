@@ -39,12 +39,10 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="text-[32px] leading-normal text-gray-900">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat
-            semper mi at ultricies. In congue bibendum felis, non faucibus libero
-            varius nec. Proin vel tempor turpis. Sed magna lorem, rhoncus et egestas
-            ut, pellentesque ut massa. Nunc et nisl metus. Praesent mollis
-            facilisis ante. Ut fringilla tristique tempus.
+          <div className="text-[31px] leading-normal text-gray-900">
+            A Transportalia oferim solucions de transport fiables i eficients per
+            connectar mercaderies, rutes i destinacions amb un servei proper,
+            puntual i preparat per respondre a les necessitats reals de cada client.
           </div>
         </div>
       </div>
