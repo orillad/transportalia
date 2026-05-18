@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useMatches } from "react-router";
 import { ChevronDown } from "lucide-react";
 import {
@@ -20,12 +20,31 @@ export function InternalLayout() {
   const avatarSrc = useCurrentUserAvatar();
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("Català");
+  const languageMenuRef = useRef<HTMLDivElement | null>(null);
   const languages = ["Català", "Castellà", "Anglès"];
   const pageTitle =
     [...matches]
       .reverse()
       .map((match) => (match.handle as RouteHandle | undefined)?.title)
       .find(Boolean) ?? "";
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showLanguageMenu &&
+        languageMenuRef.current &&
+        !languageMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowLanguageMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showLanguageMenu]);
 
   return (
     <SidebarProvider defaultOpen>
@@ -39,7 +58,7 @@ export function InternalLayout() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="relative">
+            <div ref={languageMenuRef} className="relative">
               <button
                 onClick={() => setShowLanguageMenu((open) => !open)}
                 className="flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-1 text-sm text-gray-700 hover:bg-gray-50"

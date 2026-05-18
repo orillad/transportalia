@@ -9,18 +9,24 @@ export default function AssignacionsPage() {
   const navigate = useNavigate();
   const [selectedDriver, setSelectedDriver] = useState<string | null>(null);
   const [selectedTruck, setSelectedTruck] = useState<string | null>(null);
-
-  const drivers = mockUsers.filter(u => u.licenseNumber);
+  const [availableDrivers, setAvailableDrivers] = useState(() =>
+    mockUsers.filter((u) => u.licenseNumber),
+  );
+  const [availableTrucks, setAvailableTrucks] = useState(() => [...mockTrucks]);
 
   const handleAssign = () => {
     if (selectedDriver && selectedTruck) {
+      setAvailableDrivers((currentDrivers) =>
+        currentDrivers.filter((driver) => driver.id !== selectedDriver),
+      );
+      setAvailableTrucks((currentTrucks) =>
+        currentTrucks.filter((truck) => truck.id !== selectedTruck),
+      );
       toast.success('Assignació exitosa', {
         description: "L'assignació del conductor i el camió ha sigut exitosa.",
       });
-      setTimeout(() => {
-        setSelectedDriver(null);
-        setSelectedTruck(null);
-      }, 2000);
+      setSelectedDriver(null);
+      setSelectedTruck(null);
     }
   };
 
@@ -49,7 +55,7 @@ export default function AssignacionsPage() {
         <div className="flex min-h-0 flex-col">
           <h3 className="mb-4 shrink-0 text-lg font-semibold">Conductors disponibles</h3>
           <div className="min-h-0 flex-1 space-y-2 overflow-y-auto rounded-lg border border-gray-200 p-4">
-            {drivers.map((driver) => (
+            {availableDrivers.map((driver) => (
               <button
                 key={driver.id}
                 onClick={() => setSelectedDriver(driver.id)}
@@ -83,7 +89,7 @@ export default function AssignacionsPage() {
         <div className="flex min-h-0 flex-col">
           <h3 className="mb-4 shrink-0 text-lg font-semibold">Camions disponibles</h3>
           <div className="min-h-0 flex-1 space-y-2 overflow-y-auto rounded-lg border border-gray-200 p-4">
-            {mockTrucks.map((truck) => (
+            {availableTrucks.map((truck) => (
               <button
                 key={truck.id}
                 onClick={() => setSelectedTruck(truck.id)}

@@ -1,12 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import imgLogoGran from '../../assets/logos/image.png';
 
 export function Header() {
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('Català');
+  const languageMenuRef = useRef<HTMLDivElement | null>(null);
 
   const languages = ['Català', 'Castellà', 'Anglès'];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showLanguageMenu &&
+        languageMenuRef.current &&
+        !languageMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowLanguageMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showLanguageMenu]);
 
   return (
     <div className="relative h-[72px] w-full border-b border-gray-200 bg-white">
@@ -18,7 +37,7 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           {/* Language selector */}
-          <div className="relative">
+          <div ref={languageMenuRef} className="relative">
             <button
               onClick={() => setShowLanguageMenu(!showLanguageMenu)}
               className="flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
