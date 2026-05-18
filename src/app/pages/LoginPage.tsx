@@ -22,7 +22,7 @@ export default function LoginPage() {
 
     if (isBlocked) {
       toast.error('Usuari bloquejat', {
-        description: "Has superat el nombre màxim d'intents permesos.",
+        description: "Posa't en contacte amb un administrador per desbloquejar el teu perfil.",
       });
       return;
     }
@@ -39,7 +39,7 @@ export default function LoginPage() {
 
       if (nextFailedAttempts >= maxLoginAttempts) {
         toast.error('Usuari bloquejat', {
-          description: "Has arribat al límit de 3 intents fallits.",
+          description: "Has arribat al límit de 3 intents fallits. Posa't en contacte amb un administrador per desbloquejar el teu perfil.",
         });
         return;
       }
@@ -117,7 +117,7 @@ export default function LoginPage() {
 
               <p className={`text-sm ${isBlocked ? 'font-medium text-red-600' : 'text-gray-500'}`}>
                 {isBlocked
-                  ? 'Usuari bloquejat després de 3 intents fallits.'
+                  ? "Usuari bloquejat. Posa't en contacte amb un administrador per desbloquejar el teu perfil."
                   : `Intents restants: ${remainingAttempts}`}
               </p>
             </form>

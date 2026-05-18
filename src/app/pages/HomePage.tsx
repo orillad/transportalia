@@ -39,7 +39,7 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="text-[31px] leading-normal text-gray-900">
+          <div className="mx-auto max-w-3xl text-base leading-8 text-gray-700 md:text-lg">
             A Transportalia oferim solucions de transport fiables i eficients per
             connectar mercaderies, rutes i destinacions amb un servei proper,
             puntual i preparat per respondre a les necessitats reals de cada client.
