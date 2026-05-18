@@ -1,13 +1,35 @@
+import { useState } from 'react';
 import { toast } from 'sonner';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '../components/ui/alert-dialog';
 import { mockUsers } from '../mock/data';
 
 export default function DesbloqueigPage() {
-  const blockedUsers = mockUsers.filter((u) => u.licenseNumber);
+  const [blockedUsers, setBlockedUsers] = useState(() =>
+    mockUsers.filter((u) => u.licenseNumber),
+  );
+  const [userToUnblock, setUserToUnblock] = useState<(typeof mockUsers)[number] | null>(null);
 
-  const handleUnblock = (_userId: string) => {
-    toast.success('Desbloqueig exitós', {
-      description: "El desbloqueig de l'usuari ha sigut exitós.",
+  const handleUnblock = () => {
+    if (!userToUnblock) {
+      return;
+    }
+
+    setBlockedUsers((currentUsers) =>
+      currentUsers.filter((user) => user.id !== userToUnblock.id),
+    );
+    toast.success('Usuari desbloquejat', {
+      description: `${userToUnblock.name} ${userToUnblock.surname} s'ha desbloquejat correctament.`,
     });
+    setUserToUnblock(null);
   };
 
   return (
@@ -51,7 +73,7 @@ export default function DesbloqueigPage() {
                 </div>
 
                 <button
-                  onClick={() => handleUnblock(user.id)}
+                  onClick={() => setUserToUnblock(user)}
                   className="rounded-lg bg-primary px-6 py-2 text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_12px_24px_rgba(19,62,111,0.2)]"
                 >
                   Desbloquejar
@@ -61,6 +83,23 @@ export default function DesbloqueigPage() {
           </div>
         </div>
       </div>
+
+      <AlertDialog open={userToUnblock !== null} onOpenChange={(open) => !open && setUserToUnblock(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar desbloqueig</AlertDialogTitle>
+            <AlertDialogDescription>
+              {userToUnblock
+                ? `Vols desbloquejar l'usuari ${userToUnblock.name} ${userToUnblock.surname}?`
+                : "Vols desbloquejar aquest usuari?"}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel·lar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleUnblock}>Acceptar</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

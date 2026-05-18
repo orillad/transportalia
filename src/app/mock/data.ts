@@ -11,9 +11,9 @@ import truckImage06 from '../../assets/trucks/truck-card-06.jpg';
 export const mockUsers = [
   {
     id: "1",
-    name: "Oriol",
-    surname: "Lladó",
-    surname2: "Real",
+    name: "Pau",
+    surname: "Serra",
+    surname2: "Vidal",
     dni: "78965421 A",
     email: "test@test.com",
     password: "1234",
@@ -30,8 +30,8 @@ export const mockUsers = [
   },
   {
     id: "3",
-    name: "Oriol Lladó",
-    surname: "Real",
+    name: "Pau Serra",
+    surname: "Vidal",
     dni: "11111111 A",
     licenseNumber: "1111111 A",
   },

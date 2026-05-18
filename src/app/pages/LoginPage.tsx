@@ -7,20 +7,45 @@ import imgLogoGran from '../../assets/logos/image.png';
 import { mockCurrentUser } from '../mock/data';
 
 export default function LoginPage() {
+  const maxLoginAttempts = 3;
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+
+  const remainingAttempts = Math.max(0, maxLoginAttempts - failedAttempts);
+  const isBlocked = failedAttempts >= maxLoginAttempts;
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (isBlocked) {
+      toast.error('Usuari bloquejat', {
+        description: "Has superat el nombre màxim d'intents permesos.",
+      });
+      return;
+    }
+
     // Mock validation
     if (email === mockCurrentUser.email && password === mockCurrentUser.password) {
+      setFailedAttempts(0);
       navigate('/transports-avui');
     } else {
+      const nextFailedAttempts = failedAttempts + 1;
+      const nextRemainingAttempts = Math.max(0, maxLoginAttempts - nextFailedAttempts);
+
+      setFailedAttempts(nextFailedAttempts);
+
+      if (nextFailedAttempts >= maxLoginAttempts) {
+        toast.error('Usuari bloquejat', {
+          description: "Has arribat al límit de 3 intents fallits.",
+        });
+        return;
+      }
+
       toast.error('Email o contrasenya incorrectes', {
-        description: 'Revisa les credencials i torna-ho a provar.',
+        description: `Revisa les credencials i torna-ho a provar. Et queden ${nextRemainingAttempts} intents.`,
       });
     }
   };
@@ -84,10 +109,17 @@ export default function LoginPage() {
               {/* Submit button */}
               <button
                 type="submit"
-                className="w-full rounded-md bg-primary py-2 font-medium text-primary-foreground hover:bg-primary/90"
+                disabled={isBlocked}
+                className="w-full rounded-md bg-primary py-2 font-medium text-primary-foreground hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary"
               >
                 Login
               </button>
+
+              <p className={`text-sm ${isBlocked ? 'font-medium text-red-600' : 'text-gray-500'}`}>
+                {isBlocked
+                  ? 'Usuari bloquejat després de 3 intents fallits.'
+                  : `Intents restants: ${remainingAttempts}`}
+              </p>
             </form>
           </div>
         </div>
