@@ -12,6 +12,11 @@ import {
 export default function TransportsAvuiPage() {
   const pageSize = 8;
   const [currentPage, setCurrentPage] = useState(1);
+  const currentDate = new Intl.DateTimeFormat("ca-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date());
   const programats = mockTransports.filter((t) => t.status === "Programat");
   const iniciats = mockTransports.filter((t) => t.status === "Iniciat");
   const finalitzats = mockTransports.filter((t) => t.status === "Finalitzat");
@@ -39,7 +44,7 @@ export default function TransportsAvuiPage() {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden p-6">
-      <div className="mb-6 shrink-0 text-gray-600">2 de març del 2026</div>
+      <div className="mb-6 shrink-0 text-gray-600">{currentDate}</div>
 
       <div className="mb-8 grid shrink-0 grid-cols-4 gap-4">
         <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
